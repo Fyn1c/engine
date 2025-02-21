@@ -38,6 +38,8 @@ int main()
     scene.addSolver(new DefaultSolver());
 
 
+    scene.addCircle(50, 50, sf::Color(100, 250, 50), 50);
+
     while (window.isOpen())
     {
         auto time = std::chrono::high_resolution_clock::now();

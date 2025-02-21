@@ -20,12 +20,12 @@ public:
 	}
 
 	void addCircle(const float& x, const float& y, sf::Color col, const double& mass) {
-		sf::CircleShape shape(50.f);
-		shape.setFillColor(col);
-		shape.setPosition({ x, y });
+		sf::Shape* shape = new sf::CircleShape(50.f);
+		shape->setFillColor(col);
+		shape->setPosition({ x, y });
 
 		Collider* coll = new SphereCollider(ColliderType::SPHERE, {x, y}, 50.0);
-		Object obj{ {x, y}, {0, 0}, {0, 0}, coll, mass, &shape};
+		Object obj{ {x, y}, {0, 0}, {0, 0}, coll, mass, shape};
 
 		
 		objectsNow.push_back(obj);
@@ -38,6 +38,7 @@ public:
 				if (SphereCollider* sp = dynamic_cast<SphereCollider*>(obj.Collider) ) {
 					sf::CircleShape* csh = dynamic_cast<sf::CircleShape*>(obj.shape);
 					window.draw(*csh);
+					firstDraw = false;
 				}
 				else {
 					PlaneCollider* pl = dynamic_cast<PlaneCollider*>(obj.Collider);
@@ -49,7 +50,12 @@ public:
 		}
 		else {
 			for (int i = 0; i < objectsNow.size(); i++) {
-				objectsPrev[i] = objectsNow[i];
+				if (i > objectsPrev.size() - 1) {
+					objectsPrev.push_back(objectsNow[i]);
+				}
+				else {
+					objectsPrev[i] = objectsNow[i];
+				}
 			}
 			pw.resolveCollisions(time, objectsNow);
 			pw.Step(time);
