@@ -16,8 +16,8 @@ CollisionPoints Test_Sphere_Sphere(
 	SphereCollider* spc1{ dynamic_cast<SphereCollider*>(a) };
 	SphereCollider* spc2{ dynamic_cast<SphereCollider*>(b) };
 
-	spc1->Center += ta->Position;
-	spc2->Center += tb->Position;
+	//spc1->Center += ta->Position;
+	//spc2->Center += tb->Position;
 
 	double o1o2 = std::pow(std::pow(spc1->Center.x - spc2->Center.x, 2) + std::pow(spc1->Center.y - spc2->Center.y, 2), 0.5);
 	if (o1o2 > spc1->Radius + spc2->Radius) {
@@ -42,7 +42,6 @@ CollisionPoints Test_Sphere_Plane(
 	Collider* a, const Transform* ta,
 	Collider* b, const Transform* tb)
 {
-
 	SphereCollider* spc1{ dynamic_cast<SphereCollider*>(a) };
 	PlaneCollider* spc2{ dynamic_cast<PlaneCollider*>(b) };
 
@@ -50,9 +49,14 @@ CollisionPoints Test_Sphere_Plane(
 
 	double numenator = std::abs(spc2->Normal.x*spc1->Center.x + spc2->Normal.y* spc1->Center.y - (spc2->Normal.x * vecOnPlane.x + spc2->Normal.y * vecOnPlane.y));
 	double denominator = std::pow(std::pow(spc2->Normal.x, 2) +  std::pow(spc2->Normal.y, 2), 0.5);
-
+	if (denominator == 0) {
+		denominator = 1;
+	}
 	double distanceToPlane = numenator / denominator;
 
+	if (distanceToPlane > spc1->Radius) {
+		return { {}, {}, {}, NULL, false };
+	}
 	Vec2d OB = distanceToPlane * (-spc2->Normal);
 	Vec2d B = spc1->Center + OB;
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "Vec2d.hpp"
 #include "Colliders.hpp"
 
@@ -8,4 +9,5 @@ struct Object {
 	Vec2d Force;
 	Collider* Collider;
 	double Mass;
+	sf::Shape* shape;
 };

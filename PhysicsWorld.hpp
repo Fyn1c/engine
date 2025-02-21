@@ -35,7 +35,7 @@ public:
 
 		
 	}
-	void resolveCollisions(float dt) {
+	void resolveCollisions(float dt, std::vector<Object> &vec) {
 		std::vector<Collision> colls;
 		for (int i = 0; i < m_objects.size() - 1; i++) {
 			for (int j = i + 1; j < m_objects.size(); j++) {
@@ -50,5 +50,12 @@ public:
 			solv->solve(colls);
 		}
 
+		for (int i = 0; i < m_objects.size(); i++) {
+			vec[i] = *m_objects[i];
+		}
+	}
+
+	void addSolver(Solver* solv) {
+		solvers.push_back(solv);
 	}
 };

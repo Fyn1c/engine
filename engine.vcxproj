@@ -25,6 +25,7 @@
     <ClInclude Include="Colliders.hpp" />
     <ClInclude Include="Collision.hpp" />
     <ClInclude Include="CollisionObject.hpp" />
+    <ClInclude Include="DefaultSolver.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="PhysicsWorld.hpp" />
     <ClInclude Include="RigidBody.hpp" />
